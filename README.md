@@ -124,7 +124,7 @@ A: No, unfortunately submissions are not accepted after the deadline.
 ## 📄License
 This project is released under the **MIT License**.  
 You are free to use, modify, and distribute the code for research and educational purposes, with proper attribution.\
-The GitHub Social Network dataset is provided by Snap and is subject to its original license and usage terms.
+The GitHub Social Network dataset is provided by Stanford Network Analysis Project (SNAP) and is subject to its original license and usage terms.
 
 See the [LICENSE](LICENSE) file for details.
 
