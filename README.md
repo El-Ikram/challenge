@@ -100,7 +100,7 @@ Submission Deadline: 02/28/2026
 
 ## 🚨Disclaimer
 
-This challenge is intended for educational purposes only.\
+This challenge is intended for educational purposes only.
 
 ## ❓ FAQ
 
