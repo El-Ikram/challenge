@@ -32,6 +32,41 @@ Graph Statistics:
 * Features: 128-dimensional node features.
 * Task: Binary classification.
 
+The dataset is split as follows:
+| Split    | Percentage | Description                   |
+| -------- | ---------- | ----------------------------- |
+| Training | 70%        | Features + labels             |
+| Testing  | 30%        | Features only (labels hidden) |
+
+The test labels are stored in a private evaluation repository and are not accessible to participants to ensure fair ranking.
+
+The competition dataset represents a graph 𝐺 = (𝑉,𝐸) where: 𝑉 = nodes and 𝐸 = edges.
+
+🧩 Graph Components:
+* Adjacency Matrix:
+File: adjacency_matrix.npz
+
+Shape: (N, N)
+
+Type: Sparse matrix
+
+The adjacency matrix 𝐴 represents connections between nodes.
+If node i is connected to node j, then: 𝐴𝑖𝑗 = 1 Otherwise: 𝐴𝑖𝑗 = 0
+
+* Node Feature Matrix
+
+File: node_features.csv
+
+Shape: (N, F)
+
+Each row corresponds to one node.
+Each column represents a feature.
+
+𝑋 ∈ 𝑅^𝑁×𝐹
+
+Where:
+𝑁 = number of nodes and 𝐹 = number of features.
+
 The GitHub Social Network dataset used in this challenge is publicly available through the Stanford Network Analysis Project (SNAP).
 
 🔗 **Dataset link:**  [Dataset](https://snap.stanford.edu/data/github-social.html)
