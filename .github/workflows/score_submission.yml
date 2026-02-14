@@ -1,5 +1,8 @@
 name: Score Submission
 
+permissions:
+  contents: write
+
 on:
   pull_request:
     paths:
@@ -16,7 +19,7 @@ jobs:
       - name: Checkout private evaluation repo
         uses: actions/checkout@v4
         with:
-          repository: YOUR_USERNAME/github-social-eval
+          repository: El-Ikram/github-social-eval
           token: ${{ secrets.PRIVATE_REPO_TOKEN }}
           path: private_eval
 
@@ -28,17 +31,11 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Validate submission
-        run: |
-          python competition/evaluate.py \
-          submissions/submission.csv \
-          private_eval/test_labels.csv
-
       - name: Evaluate submission (Macro F1)
         id: eval
         run: |
           SCORE=$(python competition/evaluate.py \
-          leaderboard/submission.csv \
+          submissions/submission.csv \
           private_eval/test_labels.csv | grep SCORE | cut -d "=" -f2)
           echo "score=$SCORE" >> $GITHUB_OUTPUT
 
