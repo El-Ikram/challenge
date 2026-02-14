@@ -1,19 +1,16 @@
 name: Score Submission
 
-permissions:
-  contents: write
-
 on:
   pull_request:
     paths:
-      - "submissions/submission.csv"
+      - "submissions/**"
 
 jobs:
   score:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout competition repo
+      - name: Checkout repo
         uses: actions/checkout@v4
 
       - name: Checkout private evaluation repo
@@ -31,7 +28,7 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Evaluate submission (Macro F1)
+      - name: Evaluate submission
         id: eval
         run: |
           SCORE=$(python competition/evaluate.py \
