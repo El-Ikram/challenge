@@ -5,45 +5,61 @@ on:
     paths:
       - "submissions/**"
 
+permissions:
+  contents: write
+
 jobs:
   score:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      # Checkout competition repo (PR branch)
+      - name: Checkout competition repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
+      # Checkout private evaluation repo
       - name: Checkout private evaluation repo
         uses: actions/checkout@v4
         with:
-          repository: El-Ikram/Help_repo
+          repository: El-Ikram/github-social-eval   
           token: ${{ secrets.PRIVATE_REPO_TOKEN }}
           path: private_eval
 
+      # Setup Python
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.10"
 
+      # Install dependencies
       - name: Install dependencies
-        run: pip install -r ./requirements.txt
+        run: pip install -r requirements.txt
 
+      # Evaluate submission
       - name: Evaluate submission
         id: eval
         run: |
           SCORE=$(python competition/evaluate.py \
           submissions/submission.csv \
           private_eval/test_labels.csv | grep SCORE | cut -d "=" -f2)
+
           echo "score=$SCORE" >> $GITHUB_OUTPUT
 
-      - name: Append to leaderboard
+      # Append score to leaderboard
+      - name: Update leaderboard
         run: |
           echo "${{ github.actor }},GCN,${{ steps.eval.outputs.score }},$(date -u +"%Y-%m-%dT%H:%M:%SZ"),Auto submission" >> leaderboard/leaderboard.csv
 
-      - name: Commit leaderboard update
+      #  Commit and push back to PR branch (FIXED detached HEAD)
+      - name: Commit changes
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@users.noreply.github.com"
+
           git add leaderboard/leaderboard.csv
           git commit -m "Update leaderboard"
-          git push
+
+          # Push back to the same PR branch
+          git push origin HEAD:${{ github.head_ref }}
