@@ -28,6 +28,9 @@ jobs:
         run: |
           python competition/render_leaderboard.py
 
+      - name: Ensure on main branch
+        run: git switch main
+
       - name: Commit rendered leaderboard
         run: |
           if git diff --quiet; then
