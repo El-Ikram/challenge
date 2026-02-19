@@ -1,3 +1,5 @@
+# OctoNode Cup <img width="80" height="80" alt="image" src="https://github.com/user-attachments/assets/885da993-37c8-45fe-99e0-c10a53f91ca0" />
+
 # GNNs Mini Competition: GitHub Social Network Classification
 <p align="center">What if we could predict user characteristics just by looking at how they connect with others?</p>
 
