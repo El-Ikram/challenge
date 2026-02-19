@@ -28,8 +28,7 @@ jobs:
         run: |
           python competition/render_leaderboard.py
 
-      - name: Ensure on main branch
-        run: git switch main
+      
 
       - name: Ensure on main branch
         run: git checkout main
