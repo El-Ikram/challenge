@@ -192,13 +192,11 @@ td, th{
     width 0.25s ease;
 }
 
-td.hidden, th.hidden{
-  opacity: 0;
-  transform: scaleX(0);
-  width: 0;
-  padding: 0;
-  border: none;
+td.hidden,
+th.hidden {
+  display: none;
 }
+
 
 
 .github-link {
