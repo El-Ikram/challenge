@@ -60,6 +60,9 @@ jobs:
         run: |
           echo "${{ github.actor }},GCN,${{ steps.eval.outputs.score }},$(date -u +"%Y-%m-%dT%H:%M:%SZ"),Auto submission" >> leaderboard/leaderboard.csv
 
+            # Ensure we are on the PR branch
+      - name: Switch to PR branch
+        run: git checkout ${{ github.head_ref }}
       #  Commit and push back to PR branch (FIXED detached HEAD)
       - name: Commit changes
         run: |
