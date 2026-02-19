@@ -175,7 +175,12 @@ Ready to compete? Follow these steps to get your model on the leaderboard
     The file contains predictions for all test nodes.\
     The order of IDs matches test_nodes.csv.\
     The file name is your_team_name_submission.csv
-* Place your submission.csv file inside the submissions/ folder and create a Pull Request.
+* To ensure fair evaluation, all submissions must be encrypted before being uploaded. Use the provided public key:
+ ```
+python encryption/encrypt.py your_team_name_submission.csv encryption/public_key.pem submissions/your_team_name_submission.enc
+```
+This generates: your_team_name_submission.enc
+* Move the encrypted .enc file into the submissions/ folder, commit and push your changes and open a Pull Request to the main repository.
 * Once your Pull Request is opened:\
     Your submission will be automatically evaluated.\
     The score will be computed using the hidden test labels.\
