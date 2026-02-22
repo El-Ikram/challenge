@@ -1,7 +1,7 @@
 name: Score Submission
 
 on:
-  pull_request_target: # Required to write to the repo from a fork
+  pull_request_target:
     paths:
       - "submissions/**"
 
@@ -12,17 +12,17 @@ jobs:
   score:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Main (Leaderboard Host)
+      - name: Checkout Competition Repo
         uses: actions/checkout@v4
         with:
-          ref: main 
+          ref: main  # Checkout main to update the leaderboard
           fetch-depth: 0
 
-      - name: Get Student Submission
+      - name: Get Submission File
         run: |
-          git fetch origin pull/${{ github.event.pull_request.number }}/head:tmp_submission
-          git checkout tmp_submission -- submissions/
-          git checkout main # Return to main to prepare the update
+          git fetch origin pull/${{ github.event.pull_request.number }}/head:tmp_branch
+          git checkout tmp_branch -- submissions/submission.csv
+          git checkout main
 
       - name: Checkout Private Eval Repo
         uses: actions/checkout@v4
@@ -36,24 +36,28 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: Calculate Score
+      - name: Evaluate
         id: eval
         run: |
-          pip install -r requirements.txt
-          # Assuming evaluate.py prints "SCORE=0.95"
+          pip install pandas
+          # Run validation
+          python competition/validate_submission.py submissions/submission.csv data/test_target_without_labels.csv
+          # Run evaluation
           SCORE=$(python competition/evaluate.py submissions/submission.csv private_eval/test_labels.csv | grep SCORE | cut -d "=" -f2)
           echo "score=$SCORE" >> $GITHUB_OUTPUT
 
-      - name: Append to Leaderboard CSV
+      - name: Update CSV
         run: |
-          # Format: Participant Name (from GitHub), Model, Score, Date, Comment
-          echo "${{ github.actor }},GNN_Model,${{ steps.eval.outputs.score }},$(date -u +'%Y-%m-%d'),Auto-eval" >> leaderboard/leaderboard.csv
+          # Ensure CSV header exists if file is new
+          if [ ! -f leaderboard/leaderboard.csv ]; then
+            echo "team,model,score,timestamp_utc,notes" > leaderboard/leaderboard.csv
+          fi
+          echo "${{ github.actor }},GCN,${{ steps.eval.outputs.score }},$(date -u +"%Y-%m-%dT%H:%M:%SZ"),Auto" >> leaderboard/leaderboard.csv
 
-      - name: Commit and Push (Fixed Detached HEAD)
+      - name: Commit and Push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add leaderboard/leaderboard.csv
-          git commit -m "Add score for ${{ github.actor }} [skip ci]"
-          # This is the magic line that fixes your error:
-          git push origin HEAD:main
+          git commit -m "New score: ${{ github.actor }}"
+          git push origin HEAD:main # The "HEAD:main" fixes the detached HEAD error
