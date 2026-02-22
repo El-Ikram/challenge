@@ -1,8 +1,17 @@
-# OctoNode Cup <img width="80" height="80" alt="image" src="https://github.com/user-attachments/assets/885da993-37c8-45fe-99e0-c10a53f91ca0" />
+ 
+# OctoNode Cup 
 
-# GNNs Mini Competition: GitHub Social Network Classification
-<p align="center">What if we could predict user characteristics just by looking at how they connect with others?</p>
 
+
+# GNNs Mini Competition: GitHub Social Network Classification 
+##
+
+<p align="center"><img width="30" height="50" alt="image" src="https://github.com/user-attachments/assets/a05b1ec7-e15e-4fff-b18e-94781888e82a" />
+What if we could predict user characteristics just by looking at how they connect with others?<img width="30" height="50" alt="image" src="https://github.com/user-attachments/assets/11ca7fe9-bfeb-417b-bf72-0ee4f829839c" />
+</p>
+
+##
+##
 ## Repository Structure
 
 Here is an overview of the repository and its key components:
@@ -131,16 +140,22 @@ The challenge is evaluated using **Macro F1-score**.
 
 The F1-score is defined as:
 
-F1 = 2 × (Precision × Recall) / (Precision + Recall)
+$$ F1 = 2 \cdot \frac{\text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}} $$
 
 Where:
 
-- Precision = TP / (TP + FP)  
-- Recall = TP / (TP + FN)
+$$
+\begin{aligned}
+\text{Precision} &= \frac{TP}{TP + FP} \\
+\text{Recall} &= \frac{TP}{TP + FN}
+\end{aligned}
+$$
+
 
 For binary classification, we compute the F1-score independently for each class and then average them:
 
-Macro F1 = (F1_class_0 + F1_class_1) / 2
+$$ \text{Macro F1} = \frac{F1_{\text{class 0}} + F1_{\text{class 1}}}{2} $$
+
 
 ### Why Macro F1?
 
@@ -150,7 +165,7 @@ Macro F1 = (F1_class_0 + F1_class_1) / 2
 
 Submissions will be ranked by **Macro F1-score on the hidden test set**. Higher Macro F1 values indicate better overall classification quality across all classes.
 
-## Difficulties and Challenges
+## 🚧Difficulties and Challenges
 
 This mini-challenge presents several challenges commonly encountered in real-world graph learning tasks:
 - High-dimensional sparse node features.
@@ -167,9 +182,9 @@ Think of this as a “from-scratch GNN challenge”, no shortcuts, no pretrained
 
 ## 📤Submission
 Ready to compete? Follow these steps to get your model on the leaderboard 
-* Each participant needs to fork this repository to his GitHub account.
+* Each participant must fork this repository to their GitHub account.
 * Each participant needs to use the provided starter code as a baseline and implement your GNN model (while respecting all constraints!).
-* Each participant after generating predictions for the test set needs to save them as a CSV file with the required format:\
+* After generating predictions on the test set, save them as a CSV file with the required format:\
    id , name , ml_target .
 * Ensure:
     The file contains predictions for all test nodes.\
