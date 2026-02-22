@@ -1,7 +1,7 @@
 name: Score Submission
 
 on:
-  pull_request_target: # Changed to allow writing to YOUR repo
+  pull_request_target: # Required to write to the repo from a fork
     paths:
       - "submissions/**"
 
@@ -12,23 +12,22 @@ jobs:
   score:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout competition repo (main)
+      - name: Checkout Main (Leaderboard Host)
         uses: actions/checkout@v4
         with:
-          ref: main # We stay on main to update the master leaderboard
+          ref: main 
           fetch-depth: 0
 
-      # Get the student's submission file from the PR
-      - name: Get submission from PR
+      - name: Get Student Submission
         run: |
-          git fetch origin pull/${{ github.event.pull_request.number }}/head:tmp_pr
-          git checkout tmp_pr -- submissions/
-          git checkout main
+          git fetch origin pull/${{ github.event.pull_request.number }}/head:tmp_submission
+          git checkout tmp_submission -- submissions/
+          git checkout main # Return to main to prepare the update
 
-      - name: Checkout private evaluation repo
+      - name: Checkout Private Eval Repo
         uses: actions/checkout@v4
         with:
-          repository: El-Ikram/Help_repo   
+          repository: El-Ikram/Help_repo
           token: ${{ secrets.PRIVATE_REPO_TOKEN }}
           path: private_eval
 
@@ -37,24 +36,24 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-
-      - name: Evaluate submission
+      - name: Calculate Score
         id: eval
         run: |
+          pip install -r requirements.txt
+          # Assuming evaluate.py prints "SCORE=0.95"
           SCORE=$(python competition/evaluate.py submissions/submission.csv private_eval/test_labels.csv | grep SCORE | cut -d "=" -f2)
           echo "score=$SCORE" >> $GITHUB_OUTPUT
 
-      - name: Update leaderboard CSV
+      - name: Append to Leaderboard CSV
         run: |
-          echo "${{ github.actor }},GCN,${{ steps.eval.outputs.score }},$(date -u +"%Y-%m-%dT%H:%M:%SZ"),Auto submission" >> leaderboard/leaderboard.csv
+          # Format: Participant Name (from GitHub), Model, Score, Date, Comment
+          echo "${{ github.actor }},GNN_Model,${{ steps.eval.outputs.score }},$(date -u +'%Y-%m-%d'),Auto-eval" >> leaderboard/leaderboard.csv
 
-      - name: Commit and Push to Main
+      - name: Commit and Push (Fixed Detached HEAD)
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add leaderboard/leaderboard.csv
-          git commit -m "New submission from ${{ github.actor }}"
-          # The "HEAD:main" syntax fixes the detached HEAD error
+          git commit -m "Add score for ${{ github.actor }} [skip ci]"
+          # This is the magic line that fixes your error:
           git push origin HEAD:main
