@@ -13,35 +13,28 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: main
-
+      
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.10"
 
-      - name: Install deps
-        run: pip install -r requirements.txt
-
-      - name: Render leaderboard (HTML and MD)
+      - name: Generate HTML & Markdown
         run: |
-          # Ensure your script writes to 'docs/leaderboard.html' and 'leaderboard/leaderboard.md'
+          pip install -r requirements.txt
+          # This script should read leaderboard/leaderboard.csv 
+          # and write to docs/leaderboard.html
           python competition/render_leaderboard.py
 
-      - name: Commit and Push Changes
+      - name: Push Updates to Docs
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/leaderboard.html leaderboard/leaderboard.md
           
-          # Add all modified leaderboard files
-          git add leaderboard/leaderboard.md
-          git add docs/leaderboard.html
-          
-          # Only push if something actually changed
           if git diff --quiet && git diff --staged --quiet; then
-            echo "No changes."
+            echo "No visual changes."
           else
-            git commit -m "Auto-update leaderboard display [skip ci]"
+            git commit -m "Update leaderboard display [skip ci]"
             git push origin HEAD:main
           fi
