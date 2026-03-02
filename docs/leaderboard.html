@@ -1,103 +1,25 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Leaderboard</title>
-  <link rel="stylesheet" href="leaderboard.css" />
+    <meta charset="UTF-8">
+    <title>OctoNode Cup Leaderboard</title>
+    <link rel="stylesheet" href="leaderboard.css">
 </head>
 <body>
-  <header class="wrap">
-    <div class="title-row">
-      <h1><span class="trophy">🏆</span> GNN Mini Competition Leaderboard <span class="trophy">🏆</span></h1>
-      <p class="sub black-text">GitHub Social Network classification • Web Dev vs ML Dev</p>
-    </div>
-  </header>
-
-  <main class="wrap">
-    <section class="controls card">
-      <div class="control">
-        <label for="search"><b>Search</b></label>
-        <input id="search" type="search" placeholder="Search team, score…🔍" />
-      </div>
-
-     
-      <div class="control">
-        <label for="dateFilter"><b>Date</b></label>
-        <select id="dateFilter">
-          <option value="all">All</option>
-          <option value="last30">Last week</option>
-          <option value="last30">Last 30 days</option>
-          <option value="last30">Last 90 days</option>
-          <option value="last180">Last 180 days</option>
-        </select>
-      </div>
-
-      
-      
-      <div class="control">
-        <label><b>Columns</b></label>
-        <div class="column-actions">
-          <button id="showAllCols">Show all</button>
-          <button id="hideAllCols">Hide all</button>
-        </div>
-        <div class="checks" id="columnToggles"></div>
-      </div>
-    </section>
-
-    <section class="card">
-      <div class="table-wrap">
-        <table id="tbl">
-          <thead>
+    <h1>OctoNode Cup Leaderboard</h1>
+    <p>Last updated: 2026-03-02 14:06:38 UTC</p>
+    <table>
+        <thead>
             <tr>
-              <th data-key="rank" data-sort="number">Rank</th>
-              <th data-key="team" data-sort="string">Team</th>
-              <th data-key="score" data-sort="number">Score</th>
-              <th data-key="timestamp_utc" data-sort="string">Date (UTC)</th>
+                <th>Rank</th>
+                <th>Team</th>
+                <th>Score</th>
+                <th>Date</th>
             </tr>
-          </thead>
-          <tbody>
-          
-          
-          </tbody>
-        </table>
-      </div>
-      <div class="foot">
-        <span id="status">Loading leaderboard…</span>
-      </div>
-    </section>
-    <section class="stats wrap">
-      <div class="stat-card">
-        <div class="icon">👥</div>
-        <div class="value" id="statParticipants">0</div>
-        <div class="label"><b>Participants</b></div>
-      </div>
-    
-      <div class="stat-card">
-        <div class="icon">🏆</div>
-        <div class="value" id="statBest">–</div>
-        <div class="label"><b>Best Score</b></div>
-      </div>
-    
-      <div class="stat-card">
-        <div class="icon">📈</div>
-        <div class="value" id="statAvg">–</div>
-        <div class="label"><b>Average Score</b></div>
-      </div>
-    
-      <div class="stat-card">
-        <div class="icon">💻</div>
-        <div class="value" id="statModel">–</div>
-        <div class="label"><b>Top Model</b></div>
-      </div>
-    </section>
-    
-    <a href="https://github.com/El-Ikram/OctoNode_Cup" class="github-link">
-      <button id="githubBtn">⮜ Back to GitHub</button>
-    </a>
-    
-  </main>
-
-  <script src="leaderboard.js"></script>
+        </thead>
+        <tbody>
+            
+        </tbody>
+    </table>
 </body>
 </html>
