@@ -1,25 +1,86 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>OctoNode Cup Leaderboard</title>
-    <link rel="stylesheet" href="leaderboard.css">
+  <meta charset="UTF-8">
+  <title>OctoNode Cup Leaderboard</title>
+  <link rel="stylesheet" href="leaderboard.css">
 </head>
 <body>
-    <h1>OctoNode Cup Leaderboard</h1>
-    <p>Last updated: 2026-03-02 15:24:18 UTC</p>
-    <table>
-        <thead>
-            <tr>
-                <th>Rank</th>
-                <th>Team</th>
-                <th>Score</th>
-                <th>Date</th>
-            </tr>
-        </thead>
-        <tbody>
-            
-        </tbody>
+
+<div class="wrap">
+
+<header>
+  <div class="title-row">
+    <h1><span class="trophy">🏆</span> OctoNode Cup Leaderboard</h1>
+    <p class="sub">Binary Node Classification Competition</p>
+  </div>
+</header>
+
+<div class="card">
+  <div class="controls">
+    <div class="control">
+      <label>Search</label>
+      <input id="search" type="search" placeholder="Search team...">
+    </div>
+
+    <div class="control">
+      <label>Date</label>
+      <select id="dateFilter">
+        <option value="all">All</option>
+        <option value="last30">Last 30 days</option>
+        <option value="last180">Last 180 days</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="column-actions">
+    <div id="columnToggles"></div>
+    <button id="showAllCols">Show All</button>
+    <button id="hideAllCols">Hide All</button>
+  </div>
+
+  <div class="table-wrap">
+    <table id="tbl">
+      <thead>
+        <tr>
+          <th data-key="rank">Rank</th>
+          <th data-key="team">Team</th>
+          <th data-key="score">Score</th>
+          <th data-key="timestamp_utc">Date (UTC)</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
     </table>
+  </div>
+
+  <div class="foot">
+    <span id="status"></span>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stat-card">
+    <div class="icon">👥</div>
+    <div id="statParticipants" class="value">–</div>
+    <div class="label">Participants</div>
+  </div>
+
+  <div class="stat-card">
+    <div class="icon">🥇</div>
+    <div id="statBest" class="value">–</div>
+    <div class="label">Best Score</div>
+  </div>
+
+  <div class="stat-card">
+    <div class="icon">📊</div>
+    <div id="statAvg" class="value">–</div>
+    <div class="label">Average Score</div>
+  </div>
+</div>
+
+</div>
+
+<script src="leaderboard.js"></script>
+
 </body>
 </html>
