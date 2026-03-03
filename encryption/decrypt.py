@@ -24,10 +24,10 @@ def decrypt_file_content(encrypted_file_path):
         file_content = f.read()
 
     # First 4 bytes = encrypted session key length
-    key_length = int.from_bytes(file_content[:4], "big")
+    RSA_KEY_SIZE = 256  # 2048-bit key
 
-    encrypted_session_key = file_content[4:4 + key_length]
-    encrypted_data = file_content[4 + key_length:]
+    encrypted_session_key = file_content[:RSA_KEY_SIZE]
+    encrypted_data = file_content[RSA_KEY_SIZE:]
 
     session_key = private_key.decrypt(
         encrypted_session_key,
