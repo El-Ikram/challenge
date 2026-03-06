@@ -182,6 +182,7 @@ Think of this as a “from-scratch GNN challenge”, no shortcuts, no pretrained
 
 ## 📤Submission
 Ready to compete? Follow these steps to get your model on the leaderboard 
+* Each participant must fork this repository to their GitHub account.
 * Each participant needs to use the provided starter code as a baseline and implement your GNN model (while respecting all constraints!).
 * After generating predictions on the test set, save them as a CSV file with the required format:\
    id , name , ml_target .
